@@ -12,8 +12,8 @@
     "babel-eslint": "8.0.1",
     "babel-jest": "21.2.0",
     "babel-loader": "7.1.2",
-    "babel-plugin-inferno": "^3.3.0",
-    "babel-preset-inferno-app": "^6.0.0",
+    "babel-plugin-inferno": "3.3.0",
+    "babel-preset-inferno-app": "6.0.0",    
     "babel-runtime": "^6.26.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "chalk": "2.1.0",
@@ -23,12 +23,14 @@
     "detect-port": "1.2.1",
     "dotenv": "4.0.0",
     "eslint": "4.9.0",
-    "eslint-config-inferno-app": "^5.0.0",
+    "eslint-config-standard": "^5.0.0",
     "eslint-loader": "1.9.0",
-    "eslint-plugin-flowtype": "2.39.1",
+    "eslint-plugin-babel": "4.1.2",
     "eslint-plugin-import": "2.7.0",
     "eslint-plugin-inferno": "7.4.0",
     "eslint-plugin-jsx-a11y": "6.0.2",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
     "extract-text-webpack-plugin": "3.0.1",
     "file-loader": "1.1.5",
     "fs-extra": "4.0.2",
@@ -50,15 +52,15 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js"
+    "dev": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "echo \"This Web App has no test scripts!\" && exit 0",
+    "lint": "eslint ./src"
   },
   "babel": {
     "presets": [
       "inferno-app"
     ]
-  },
-  "eslintConfig": {
-    "extends": "inferno-app"
   },
   "proxy": "https://weixin.bingyan-tech.hustonline.net/iknowhust/question/"
 }
