@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "inferno": "^3.10.1",
+    "history": "^4.7.2",
+    "inferno": "3.10.1",
     "inferno-component": "^3.10.1",
     "inferno-router": "^3.10.1",
-    "prop-types": "15.6.0"
+    "iscroll": "^5.2.0",
+    "prop-types": "15.6.0",
+    "swipe-js-iso": "^2.0.4"
   },
   "devDependencies": {
     "autoprefixer": "7.1.5",
@@ -40,6 +43,7 @@
     "http-proxy-middleware": "0.17.4",
     "inferno-dev-utils": "^4.0.0",
     "inferno-error-overlay": "^3.0.0",
+    "node-sass": "^4.6.1",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "^3.2.0",
     "postcss-loader": "2.0.8",

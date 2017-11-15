@@ -1,0 +1,34 @@
+.tab-header
+  display: flex
+  flex-shrink: 0
+  position: relative
+  height: 1.6rem
+  flex-direction: row
+  justify-content: space-around
+  padding-bottom: 2px
+  border-bottom: #fff
+  background-color: #fff
+  .tab
+    flex-grow: 1
+    text-align: center
+    height: 1.6rem
+    line-height: 1.6rem
+    font-size: .75rem
+    font-weight: 600
+    font-family: sans-serif
+    color: #adc7e2
+    vertical-align: top
+    transition: color .2s
+    &.active
+      color: #5192fc
+  .highlight-bar
+    position: absolute;
+    height: 4px;
+    border-radius: 2px;
+    transform: scale(.5);
+    transform-origin: 50% 100%;
+    width: 20%;
+    background-color: #5192fc;
+    bottom: 0;
+    left: 0;
+    transition: transform .2s;
