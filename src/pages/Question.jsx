@@ -41,11 +41,17 @@ export default class Question extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    const matchedQuestions = this.context.allQuestions
+      .filter((question) => question.type === this.props.params.type)
+
+    this.context.updateWeixinConfig({
+      title: `iKnow 华科 | “${nextProps.params.type}”的问题都在这里啦！`, // 分享标题
+      // generate 摘要
+      desc: matchedQuestions.map(({title}, i) => (i + 1) + '.' + title).join(' \n'), // 分享链接
+    })
+
     if (nextProps.params.id && nextProps.params.type) {
       // console.log(this.context.allQuestions)
-      const matchedQuestions = this.context.allQuestions
-        .filter((question) => question.type === this.props.params.type)
-
       const scrollIndex = matchedQuestions.findIndex((q) => q.id === parseInt(nextProps.params.id))
 
       this.setState({ scrollIndex })

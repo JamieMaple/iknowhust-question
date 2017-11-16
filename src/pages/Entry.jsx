@@ -76,4 +76,12 @@ export default class Entry extends Component {
       </div>
     )
   }
+
+  componentDidMount () {
+    this.context.updateWeixinConfig({
+      title: 'iKnow 华科 | 你不是知道的我们都知道！', // 分享标题
+      // generate 摘要
+      desc: this.context.top.map(({title}, i) => (i + 1) + '.' + title).join(' \n'), // 分享链接
+    })
+  }
 }

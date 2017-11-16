@@ -3,14 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "better-scroll": "1.4.1",
     "history": "4.7.2",
     "humps": "2.0.1",
     "inferno": "3.10.1",
     "inferno-component": "3.10.1",
     "inferno-router": "3.10.1",
-    "better-scroll": "1.4.1",
     "prop-types": "15.6.0",
-    "swipe-js-iso": "2.0.4"
+    "swipe-js-iso": "2.0.4",
+    "weixin-js-sdk": "^1.2.0"
   },
   "devDependencies": {
     "autoprefixer": "7.1.5",

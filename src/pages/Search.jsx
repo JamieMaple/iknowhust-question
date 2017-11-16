@@ -60,6 +60,12 @@ export default class Search extends Component {
     const searchResponse = await fetch(`api/v1/search/?text=${nextProps.params.keyword}`)
     const result = await searchResponse.json().then(camelize)
 
+    this.context.updateWeixinConfig({
+      title: `iKnow 华科 | “${nextProps.params.keyword}”相关的问题都在这里啦！`, // 分享标题
+      // generate 摘要
+      desc: result.map(({title}, i) => (i + 1) + '.' + title).join(' \n'), // 分享链接
+    })
+
     this.setState({
       isLoading: false,
       result,

@@ -63,4 +63,12 @@ export default class Feedback extends Component {
         }
       })
   }
+
+  componentDidMount () {
+    this.context.updateWeixinConfig({
+      title: `iKnow 华科 | 向我们反馈“${this.props.params.type}”的建议`, // 分享标题
+      // generate 摘要
+      desc: '你的反馈对我们帮助非常大哦！', // 分享链接
+    })
+  }
 }

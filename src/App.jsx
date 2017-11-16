@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Component from 'inferno-component'
 import { Route, Router } from 'inferno-router'
 import createHashHistory from 'history/createHashHistory'
+import wx from 'weixin-js-sdk'
 
 import { camelizeKeys as camelize } from 'humps'
 
@@ -39,6 +40,23 @@ export default class App extends Component {
   allQuestions = []
   top = []
   videotex = []
+  config = {}
+  updateWeixinConfig = (wechatShareConfig) => {
+    const jumpBearer = 'https://weixin.bingyan-tech.hustonline.net/iknowhust/question/jump.html'
+    const imgUrl = 'https://weixin.bingyan-tech.hustonline.net/iknowhust/question/favicon.png'
+    if (!wechatShareConfig.link) {
+      wechatShareConfig.link = `${jumpBearer}?to=${encodeURIComponent(window.location.href)}`
+    }
+    if (!wechatShareConfig.imgUrl) {
+      wechatShareConfig.imgUrl = imgUrl
+    }
+    console.log(wechatShareConfig)
+    wx.onMenuShareTimeline(wechatShareConfig)
+    wx.onMenuShareAppMessage(wechatShareConfig)
+    wx.onMenuShareQQ(wechatShareConfig)
+    wx.onMenuShareWeibo(wechatShareConfig)
+    wx.onMenuShareQZone(wechatShareConfig)
+  }
 
   getChildContext () {
     return {
@@ -47,6 +65,7 @@ export default class App extends Component {
       videotex: this.videotex,
       allQuestions: this.allQuestions,
       history,
+      updateWeixinConfig: this.updateWeixinConfig,
     }
   }
 
@@ -56,7 +75,7 @@ export default class App extends Component {
     videotex: PropTypes.array,
   }
 
-  async componentWillMount () {
+  async fetchQuestions () {
     this.top = await (await fetch('api/v1/questions/top/')).json().then(camelize)
     this.videotex = await (await fetch('api/v1/videotexs/')).json().then(camelize)
     const questionResponse = await fetch('api/v1/questions/')
@@ -85,5 +104,53 @@ export default class App extends Component {
     //   this.setState({ loaded: true })
     // } catch (e) {}
     this.setState({ loaded: true })
+  }
+
+  async prepareWeixinAuth () {
+    return fetch('api/v1/config/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        url: window.location.href.split('#')[0],
+      }),
+    })
+      .then((res) => {
+        return new Promise((resolve, reject) => {
+          res.json().then(({ appId, timestamp, nonceStr, signature }) => {
+            wx.config({
+              debug: false,
+              appId: appId,
+              timestamp: timestamp,
+              nonceStr: nonceStr,
+              signature: signature,
+              jsApiList: [
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage',
+                'onMenuShareQQ',
+                'onMenuShareWeibo',
+                'onMenuShareQZone',
+                'previewImage',
+              ],
+            })
+            wx.ready(() => {
+              resolve()
+            })
+            wx.error(function (res) {
+              reject(new Error('微信配置失败！'))
+            })
+            this.config.appId = appId
+            this.config.timestamp = timestamp
+            this.config.nonceStr = nonceStr
+            this.config.signature = signature
+          })
+        })
+      })
+  }
+
+  componentWillMount () {
+    this.fetchQuestions()
+    this.prepareWeixinAuth()
   }
 }
