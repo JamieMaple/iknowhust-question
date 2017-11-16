@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 
 import styles from '../style/TextList.sass'
 
-const TextList = props =>
+const TextList = (props) =>
   <ul className={styles['text-list']}>
     {
       props.listItems.map((item, i) =>

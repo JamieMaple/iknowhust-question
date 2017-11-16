@@ -24,7 +24,7 @@ export default class SwipeList extends Component {
 
   render () {
     return (
-      <div className={styles['swipe']} ref={ele => { this.swipeElement = ele }}>
+      <div className={styles['swipe']} ref={(ele) => { this.swipeElement = ele }}>
         {
           // this.props.children.map(child =>
           //   <div className={styles['swipe-wrap']}>
@@ -35,7 +35,7 @@ export default class SwipeList extends Component {
         {
           <div className={styles['swipe-wrap']}>
             {
-              this.props.children.map(child =>
+              this.props.children.map((child) =>
                 <div>
                   <div
                     style={{

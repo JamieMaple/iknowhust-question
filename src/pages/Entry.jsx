@@ -19,7 +19,7 @@ export default class Entry extends Component {
     activeTabIndex: 0,
   }
 
-  handleIndexChange = index => this.setState({ activeTabIndex: index })
+  handleIndexChange = (index) => this.setState({ activeTabIndex: index })
 
   render () {
     // const { router } = this.context
@@ -40,16 +40,16 @@ export default class Entry extends Component {
           onSlideChange={this.handleIndexChange}
         >
           <TextList
-            listItems={this.context.top.map(data => data.title)}
+            listItems={this.context.top.map((data) => data.title)}
           />
           {
-            Object.keys(this.context.questions).map(key =>
+            Object.keys(this.context.questions).map((key) =>
               <TextList listItems={Object.keys(this.context.questions[key]) || []} />
             )
           }
           <ArticleList
             listItems={this.context.videotex}
-            onItemClick={item => window.open(item.url)}
+            onItemClick={(item) => window.open(item.url)}
           />
         </SwipeList>
       </div>

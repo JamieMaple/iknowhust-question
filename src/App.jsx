@@ -2,13 +2,14 @@
 import PropTypes from 'prop-types'
 import Component from 'inferno-component'
 import { Route, Router } from 'inferno-router'
-import createBrowserHistory from 'history/createBrowserHistory'
+import createHashHistory from 'history/createHashHistory'
 
 import { camelizeKeys as camelize } from 'humps'
 
 import Entry from './pages/Entry'
+import Question from './pages/Question'
 
-const history = createBrowserHistory()
+const history = createHashHistory()
 
 export default class App extends Component {
   render () {
@@ -17,7 +18,9 @@ export default class App extends Component {
         ? (
           <Router history={history}>
             <Route path={'/'} component={Entry}/>
-            <Route path={'/search'} component={Entry}/>
+            {/* <Route path={'/search'} component={Entry}/> */}
+            <Route path={'/question/:type/:id'} component={Question}/>
+            <Route path={'/question/:type'} component={Question}/>
           </Router>
         )
         : null
