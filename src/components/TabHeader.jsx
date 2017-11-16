@@ -8,7 +8,7 @@ const TabHeader = ({ style, className, activeIndex, tabs, ...others }) =>
       tabs.map((tab, i) =>
         <div
           className={styles['tab'] + ' ' + (i === activeIndex ? styles['active'] : '')}
-          onClick={() => others.onRequestChangeTab()}
+          onClick={() => others.onRequestChangeTab(i)}
         >
           { tab }
         </div>

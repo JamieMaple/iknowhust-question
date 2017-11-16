@@ -50,7 +50,7 @@ const TextList = props =>
   <ul className={styles['text-list']}>
     {
       props.listItems.map((item, i) =>
-        <li className={styles['list-item']}>{i + 1}. {item}</li>
+        <li key={item} className={styles['list-item']}>{i + 1}. {item}</li>
       )
     }
   </ul>

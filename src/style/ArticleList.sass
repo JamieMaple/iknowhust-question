@@ -1,0 +1,41 @@
+.article-list
+  margin: 0
+  list-style: none
+  padding-left: 0
+  height: 100%
+  overflow: scroll
+  position: relative
+  background-color: #f3f5f8
+  -webkit-overflow-scrolling: touch
+  .list-item
+    display: flex
+    flex-direction: row
+    padding: .5rem .8rem
+    width: 100%
+    margin: 2px 0
+    background-color: #fff
+    box-sizing: border-box
+    text-decoration: none
+    > div
+      flex-grow: 1
+      overflow: hidden
+      .list-item-title
+        margin: 0
+        font-size: .85rem
+        color: #55585a
+      .list-item-content
+        margin: .2rem 0
+        font-size: .74375rem
+        color: #83888b
+        max-height: 2rem
+        line-height: 1rem
+        overflow: hidden
+        text-overflow: ellipsis
+        display: -webkit-box
+        -webkit-box-orient: vertical
+        -webkit-line-clamp: 2
+    > img
+      flex-shrink: 0
+      height: 5rem
+      width: 5rem
+      margin-right: .5rem
