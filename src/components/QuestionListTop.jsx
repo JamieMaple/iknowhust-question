@@ -28,10 +28,9 @@ export default class QuestionListTop extends Component {
         <div className={styles['questions-list-button'] + ' ' + styles['home']}/>
         <h1 className={styles['questions-list-title']}>校园网相关</h1>
         <div
-          tabIndex={1}
           className={styles['questions-list-button'] + ' ' + styles['menu']}
-          onFocus={() => this.setState((preState) => ({ menuHidden: !preState.menuHidden }))}
-          onBlur={() => this.setState((preState) => ({ menuHidden: !preState.menuHidden }))}
+          onClick={() => this.setState((preState) => ({ menuHidden: !preState.menuHidden }))}
+          // onBlur={() => this.setState((preState) => ({ menuHidden: true }))}
         >
           {
             props.menuList.length > 0 &&
@@ -42,6 +41,7 @@ export default class QuestionListTop extends Component {
                     onClick={(e) => {
                       e.stopPropagation()
                       props.onMenuItemClick(item, i)
+                      this.setState((preState) => ({ menuHidden: true }))
                     }}
                   >
                     {item}

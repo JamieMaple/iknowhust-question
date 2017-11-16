@@ -12,10 +12,15 @@ export default class Question extends Component {
   }
 
   render () {
+    const matchedQuestions = this.context.allQuestions.filter((question) => question.type === this.props.params.type)
     return (
       <div>
-        <QuestionListTop/>
-        <QuestionList/>
+        <QuestionListTop
+          menuList={matchedQuestions.map((q) => q.summary)}
+        />
+        <QuestionList
+          questionList={matchedQuestions}
+        />
       </div>
     )
   }
@@ -26,7 +31,7 @@ export default class Question extends Component {
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.params.id || nextProps.params.type) {
-      console.log(this.context.allQuestions)
+      // console.log(this.context.allQuestions)
     }
   }
 }

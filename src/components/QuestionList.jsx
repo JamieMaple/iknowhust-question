@@ -8,17 +8,23 @@ import styles from '../style/QuestionList.sass'
 export default class QuestionList extends Component {
   static propTypes = {
     questionList: PropTypes.array.isRequired,
+    initScrollToIndex: PropTypes.node.isRequired,
+    onQuestionClick: PropTypes.func.isRequired,
+    onFeedbackClick: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
     questionList: [],
+    initScrollToIndex: 0,
+    onQuestionClick: () => {},
+    onFeedbackClick: () => {},
   }
 
   scrollWrapper = null
   scroller = null
 
   linkify (inputText) {
-    var replacedText, replacePattern1, replacePattern2, replacePattern3
+    let replacedText, replacePattern1, replacePattern2, replacePattern3
 
     // URLs starting with http://, https://, or ftp://
     replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gim
@@ -43,8 +49,8 @@ export default class QuestionList extends Component {
       >
         <ul className={styles['question-list']}>
           {
-            this.context.allQuestions.map((question, i) =>
-              <li className={styles['question-list-item']}>
+            this.props.questionList.map((question, i) =>
+              <li className={styles['question-list-item']} onClick={() => this.props.onQuestionClick(question, i)}>
                 <div className={styles['title']}>{i + 1}.{question.title}</div>
                 <p
                   className={styles['answer']}
@@ -55,6 +61,9 @@ export default class QuestionList extends Component {
               </li>
             )
           }
+          <div className={styles['feedback-bottom']}>
+            <a className={styles['feedback-link']}>有问题？反馈给爱闹！</a>
+          </div>
         </ul>
       </div>
     )
@@ -65,11 +74,25 @@ export default class QuestionList extends Component {
       this.scroller = new BScroll(this.scrollWrapper, {
         scrollX: false,
         click: true,
+        scrollbar: true,
       })
     }
   }
 
+  componentDidUpdate () {
+    // console.log('aaa')
+    this.scroller.refresh()
+    // this.scroller.destroy()
+    // if (this.scrollWrapper instanceof HTMLElement) {
+    //   this.scroller = new BScroll(this.scrollWrapper, {
+    //     scrollX: false,
+    //     click: true,
+    //     scrollbar: true,
+    //   })
+    // }
+  }
+
   componentWillUnmount () {
-    this.scroller.destory()
+    this.scroller.destroy()
   }
 }

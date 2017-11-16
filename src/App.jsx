@@ -18,9 +18,9 @@ export default class App extends Component {
         ? (
           <Router history={history}>
             <Route path={'/'} component={Entry}/>
-            {/* <Route path={'/search'} component={Entry}/> */}
             <Route path={'/question/:type/:id'} component={Question}/>
             <Route path={'/question/:type'} component={Question}/>
+            <Route path={'/:index'} component={Entry}/>
           </Router>
         )
         : null

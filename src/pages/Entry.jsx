@@ -16,13 +16,17 @@ export default class Entry extends Component {
   }
 
   state = {
-    activeTabIndex: 0,
+    activeTabIndex: isNaN(this.props.params.index) ? 0 : this.props.params.index,
   }
 
-  handleIndexChange = (index) => this.setState({ activeTabIndex: index })
+  handleIndexChange = (index) => {
+    const { router } = this.context
+    this.setState({ activeTabIndex: index }
+      , () => router.replace(`/${this.state.activeTabIndex}`))
+  }
 
   render () {
-    // const { router } = this.context
+    const { router } = this.context
     return (
       <div>
         <SearchTopBar/>
@@ -44,12 +48,21 @@ export default class Entry extends Component {
           />
           {
             Object.keys(this.context.questions).map((key) =>
-              <TextList listItems={Object.keys(this.context.questions[key]) || []} />
+              <TextList
+                listItems={Object.keys(this.context.questions[key]) || []}
+                onItemClick={(item) => {
+                  router.replace(`/${this.state.activeTabIndex}`)
+                  router.push(`/question/${item}`)
+                }}
+              />
             )
           }
           <ArticleList
             listItems={this.context.videotex}
-            onItemClick={(item) => window.open(item.url)}
+            onItemClick={(item) => {
+              router.replace(`/${this.state.activeTabIndex}`)
+              window.open(item.url)
+            }}
           />
         </SwipeList>
       </div>

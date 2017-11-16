@@ -9,7 +9,7 @@ const TextList = (props) =>
         <li
           key={item}
           className={styles['list-item']}
-          onClick={props.onItemClick(item, i)}
+          onClick={() => props.onItemClick(item, i)}
         >
           {i + 1}. {item}
         </li>
