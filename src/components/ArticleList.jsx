@@ -8,7 +8,7 @@ const ArticleList = props =>
       props.listItems.map((item, i) =>
         <li
           className={styles['list-item']}
-          onClick={() => props.onItemClick(item)}
+          onClick={() => props.onItemClick(item, i)}
         >
           {
             item.thumb_url &&
@@ -25,10 +25,12 @@ const ArticleList = props =>
 
 ArticleList.propTypes = {
   listItems: PropTypes.array.isRequired,
+  onItemClick: PropTypes.func.isRequired,
 }
 
 ArticleList.defaultProps = {
   listItems: [],
+  onItemClick: () => {},
 }
 
 export default ArticleList

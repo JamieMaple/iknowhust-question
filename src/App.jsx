@@ -4,6 +4,8 @@ import Component from 'inferno-component'
 import { Route, Router } from 'inferno-router'
 import createBrowserHistory from 'history/createBrowserHistory'
 
+import { camelizeKeys as camelize } from 'humps'
+
 import Entry from './pages/Entry'
 
 const history = createBrowserHistory()
@@ -27,6 +29,7 @@ export default class App extends Component {
   }
 
   questions = {}
+  allQuestions = []
   top = []
   videotex = []
 
@@ -35,6 +38,7 @@ export default class App extends Component {
       questions: this.questions,
       top: this.top,
       videotex: this.videotex,
+      allQuestions: this.allQuestions,
     }
   }
 
@@ -45,10 +49,11 @@ export default class App extends Component {
   }
 
   async componentWillMount () {
-    this.top = await (await fetch('api/v1/questions/top/')).json()
-    this.videotex = await (await fetch('api/v1/videotexs/')).json()
+    this.top = await (await fetch('api/v1/questions/top/')).json().then(camelize)
+    this.videotex = await (await fetch('api/v1/videotexs/')).json().then(camelize)
     const questionResponse = await fetch('api/v1/questions/')
-    const questions = await questionResponse.json()
+    const questions = await questionResponse.json().then(camelize)
+    this.allQuestions = questions
 
     const questionSetByCategory = questions.reduce((set, question) => {
       if (!set[question.category]) set[question.category] = []

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "history": "4.7.2",
+    "humps": "^2.0.1",
     "inferno": "3.10.1",
     "inferno-component": "^3.10.1",
     "inferno-router": "^3.10.1",

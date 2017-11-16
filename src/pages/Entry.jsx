@@ -1,4 +1,4 @@
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import Component from 'inferno-component'
 
@@ -9,22 +9,20 @@ import SearchTopBar from '../components/SearchTopBar'
 import SwipeList from '../components/SwipeList'
 
 export default class Entry extends Component {
-  // static contextTypes = {
-  //   questions: PropTypes.object,
-  //   top: PropTypes.array,
-  //   videotex: PropTypes.array,
-  // }
+  static contextTypes = {
+    questions: PropTypes.object,
+    top: PropTypes.array,
+    videotex: PropTypes.array,
+  }
 
   state = {
     activeTabIndex: 0,
-    topData: [],
-    typeSet: [],
-    videotexData: [],
   }
 
   handleIndexChange = index => this.setState({ activeTabIndex: index })
 
   render () {
+    // const { router } = this.context
     return (
       <div>
         <SearchTopBar/>
@@ -49,7 +47,10 @@ export default class Entry extends Component {
               <TextList listItems={Object.keys(this.context.questions[key]) || []} />
             )
           }
-          <ArticleList listItems={this.context.videotex}/>
+          <ArticleList
+            listItems={this.context.videotex}
+            onItemClick={item => window.open(item.url)}
+          />
         </SwipeList>
       </div>
     )
