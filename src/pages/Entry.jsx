@@ -16,7 +16,9 @@ export default class Entry extends Component {
   }
 
   state = {
-    activeTabIndex: isNaN(this.props.params.index) ? 0 : this.props.params.index,
+    activeTabIndex: isNaN(this.props.params.index)
+      ? 0
+      : Number(this.props.params.index),
     keyword: '',
   }
 

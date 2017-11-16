@@ -16,17 +16,21 @@ export default class Question extends Component {
   }
 
   render () {
+    const { router } = this.context
     const matchedQuestions = this.context.allQuestions
       .filter((question) => question.type === this.props.params.type)
     return (
       <div>
         <QuestionListTop
+          title={this.props.params.type}
           menuList={matchedQuestions.map((q) => q.summary)}
           onMenuItemClick={(item, i) => this.setState({ scrollIndex: i })}
+          onHomeButtonClick={() => history.go(-1)}
         />
         <QuestionList
           questionList={matchedQuestions}
           initScrollToIndex={this.state.scrollIndex}
+          onFeedbackClick={() => router.push(`/feedback/${this.props.params.type}`)}
         />
       </div>
     )

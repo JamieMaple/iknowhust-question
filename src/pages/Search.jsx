@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types'
-
 import Component from 'inferno-component'
+
+import { camelizeKeys as camelize } from 'humps'
 
 import ArticleList from '../components/ArticleList'
 import SearchTopBar from '../components/SearchTopBar'
 
 import styles from '../style/main.sass'
 
-export default class Entry extends Component {
+export default class Search extends Component {
   static contextTypes = {
     questions: PropTypes.object,
     top: PropTypes.array,
@@ -31,8 +32,12 @@ export default class Entry extends Component {
         />
         {
           this.state.result.length > 0 || this.state.isLoading
-            ? <ArticleList listItems={this.state.result}/>
-            : (
+            ? (
+              <ArticleList
+                listItems={this.state.result}
+                onItemClick={(item) => window.open(item.url)}
+              />
+            ) : (
               <div className={styles['i-dont-know']}>
                 <div>啊！这个我真不知道！</div>
                 <div>随便点进一个答案反馈给我！</div>
@@ -53,7 +58,7 @@ export default class Entry extends Component {
       keyword: nextProps.params.keyword,
     })
     const searchResponse = await fetch(`api/v1/search/?text=${nextProps.params.keyword}`)
-    const result = await searchResponse.json()
+    const result = await searchResponse.json().then(camelize)
 
     this.setState({
       isLoading: false,

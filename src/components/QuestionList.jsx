@@ -61,7 +61,10 @@ export default class QuestionList extends Component {
               </li>
             )
           }
-          <div className={styles['feedback-bottom']}>
+          <div
+            className={styles['feedback-bottom']}
+            onClick={() => this.props.onFeedbackClick()}
+          >
             <a className={styles['feedback-link']}>有问题？反馈给爱闹！</a>
           </div>
         </ul>

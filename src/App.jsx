@@ -9,6 +9,7 @@ import { camelizeKeys as camelize } from 'humps'
 import Entry from './pages/Entry'
 import Question from './pages/Question'
 import Search from './pages/Search'
+import Feedback from './pages/Feedback'
 
 const history = createHashHistory()
 
@@ -19,6 +20,7 @@ export default class App extends Component {
         ? (
           <Router history={history}>
             <Route path={'/'} component={Entry}/>
+            <Route path={'/feedback/:type'} component={Feedback}/>
             <Route path={'/search/:keyword'} component={Search}/>
             <Route path={'/question/:type/:id'} component={Question}/>
             <Route path={'/question/:type'} component={Question}/>
@@ -44,6 +46,7 @@ export default class App extends Component {
       top: this.top,
       videotex: this.videotex,
       allQuestions: this.allQuestions,
+      history,
     }
   }
 

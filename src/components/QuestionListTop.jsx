@@ -25,8 +25,11 @@ export default class QuestionListTop extends Component {
 
     return (
       <header className={styles['questions-list-header'] + ' ' + className} style={style}>
-        <div className={styles['questions-list-button'] + ' ' + styles['home']}/>
-        <h1 className={styles['questions-list-title']}>校园网相关</h1>
+        <div
+          className={styles['questions-list-button'] + ' ' + styles['home']}
+          onClick={() => props.onHomeButtonClick()}
+        />
+        <h1 className={styles['questions-list-title']}>{props.title}</h1>
         <div
           className={styles['questions-list-button'] + ' ' + styles['menu']}
           onClick={() => this.setState((preState) => ({ menuHidden: !preState.menuHidden }))}

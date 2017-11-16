@@ -14,11 +14,27 @@
   background-size: 50% auto
   background-repeat: no-repeat
   background-position: 50%
-  background-color: #f2f2f2
+  // background-color: #f2f2f2
   &.home
     background-image: url('../assets/home-icon.png')
   &.menu
     background-image: url('../assets/menu-icon.png')
+  &.close
+    &::before
+      content: '+'
+      position: absolute
+      display: block
+      width: 2.4rem;
+      line-height: 2.4rem;
+      height: 2.4rem;
+      text-align: center;
+      display: inline-block;
+      transform: rotate(45deg)scale(1.2);
+      font-size: 1.5rem;
+      color: #5192fc;
+      font-weight: 300;
+  &.send
+    background-image: url('../assets/send-icon.png')
 
 .questions-list-title
   width: 76%
@@ -41,6 +57,7 @@
   right: .3rem
   top: 2.4rem
   height: 0
+  max-height: 20rem
   width: 6.8rem
   transform: translateY(-1rem)
   opacity: 0
@@ -49,12 +66,14 @@
   overflow: hidden
   background-color: #fff
   transition: transform .2s, opacity .3s
+  -webkit-overflow-scrolling: touch
   &.show
     height: auto
     background-color: #fff
     transform: translateY(0)
     opacity: 1
-    overflow: visible
+    overflow: scroll
+    // overflow: visible
     z-index: 999999999
     &::after
       display: inline-block
