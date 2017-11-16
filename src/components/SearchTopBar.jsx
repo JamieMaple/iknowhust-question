@@ -7,7 +7,11 @@ const SearchTopBar = ({ style, className, onSubmit, ...others }) =>
     className={(className || '') + ' ' + styles['search-bar']}
     style={style}
   >
-    <input placeholder={'你不知道的我都知道'} {...others}/>
+    <input
+      placeholder={'你不知道的我都知道'}
+      {...others}
+      onKeyDown={(e) => e.keyCode === 13 ? onSubmit() : void 0}
+    />
     <button
       className={styles['search-icon-button']}
       onClick={() => onSubmit()}

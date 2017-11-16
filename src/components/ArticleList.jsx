@@ -11,8 +11,8 @@ const ArticleList = (props) =>
           onClick={() => props.onItemClick(item, i)}
         >
           {
-            item.thumb_url &&
-            <img src={item.thumb_url}/>
+            item.thumbUrl &&
+            <img src={item.thumbUrl}/>
           }
           <div>
             <h2 className={styles['list-item-title']}>{item.title}</h2>

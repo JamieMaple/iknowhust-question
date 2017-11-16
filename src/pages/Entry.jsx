@@ -17,6 +17,7 @@ export default class Entry extends Component {
 
   state = {
     activeTabIndex: isNaN(this.props.params.index) ? 0 : this.props.params.index,
+    keyword: '',
   }
 
   handleIndexChange = (index) => {
@@ -29,7 +30,11 @@ export default class Entry extends Component {
     const { router } = this.context
     return (
       <div>
-        <SearchTopBar/>
+        <SearchTopBar
+          value={this.state.keyword}
+          onInput={(e) => this.setState({ keyword: e.target.value })}
+          onSubmit={() => router.push(`/search/${this.state.keyword}`)}
+        />
         <TabHeader
           activeIndex={this.state.activeTabIndex}
           tabs={[
@@ -45,6 +50,7 @@ export default class Entry extends Component {
         >
           <TextList
             listItems={this.context.top.map((data) => data.title)}
+            onItemClick={(item, i) => router.push(`/question/${this.context.top[i].type}/${this.context.top[i].id}`)}
           />
           {
             Object.keys(this.context.questions).map((key) =>

@@ -76,20 +76,13 @@ export default class QuestionList extends Component {
         click: true,
         scrollbar: true,
       })
+      this.scroller.scrollToElement(this.scrollWrapper.firstChild.childNodes[this.props.initScrollToIndex], 1000)
     }
   }
 
   componentDidUpdate () {
-    // console.log('aaa')
     this.scroller.refresh()
-    // this.scroller.destroy()
-    // if (this.scrollWrapper instanceof HTMLElement) {
-    //   this.scroller = new BScroll(this.scrollWrapper, {
-    //     scrollX: false,
-    //     click: true,
-    //     scrollbar: true,
-    //   })
-    // }
+    this.scroller.scrollToElement(this.scrollWrapper.firstChild.childNodes[this.props.initScrollToIndex], 1000)
   }
 
   componentWillUnmount () {
