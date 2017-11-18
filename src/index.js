@@ -2,7 +2,9 @@ import { render } from 'inferno'
 import App from './App.jsx'
 import './style/main.sass'
 
-;(function () {
+import register from './registerServiceWorker'
+
+(function () {
   // use this script to replace @media
   let timeoutHandler = 0
   const rem = () => {
@@ -14,3 +16,5 @@ import './style/main.sass'
 })()
 
 render(<App />, document.getElementById('app'))
+
+register()
