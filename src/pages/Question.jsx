@@ -18,11 +18,11 @@ export default class Question extends Component {
   render () {
     const { router } = this.context
     const matchedQuestions = this.context.allQuestions
-      .filter((question) => question.type === this.props.params.type)
+      .filter((question) => question.type === decodeURI(this.props.params.type))
     return (
       <div>
         <QuestionListTop
-          title={this.props.params.type}
+          title={decodeURI(this.props.params.type)}
           menuList={matchedQuestions.map((q) => q.summary)}
           onMenuItemClick={(item, i) => this.setState({ scrollIndex: i })}
           onHomeButtonClick={() => history.go(-1)}
@@ -42,10 +42,10 @@ export default class Question extends Component {
 
   componentWillReceiveProps (nextProps) {
     const matchedQuestions = this.context.allQuestions
-      .filter((question) => question.type === this.props.params.type)
+      .filter((question) => question.type === decodeURI(this.props.params.type))
 
     this.context.updateWeixinConfig({
-      title: `iKnow 华科 | “${nextProps.params.type}”的问题都在这里啦！`, // 分享标题
+      title: `iKnow 华科 | “${decodeURI(nextProps.params.type)}”的问题都在这里啦！`, // 分享标题
       // generate 摘要
       desc: matchedQuestions.map(({title}, i) => (i + 1) + '.' + title).join(' \n'), // 分享链接
     })

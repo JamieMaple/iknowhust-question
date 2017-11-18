@@ -22,13 +22,16 @@ export default class Search extends Component {
   }
 
   render () {
-    const { router } = this.context
+    const { history } = this.context
     return (
       <div>
         <SearchTopBar
-          value={this.state.keyword}
+          value={decodeURI(this.state.keyword)}
           onInput={(e) => this.setState({ keyword: e.target.value })}
-          onSubmit={() => router.push(`/search/${this.state.keyword}`)}
+          onSubmit={() => {
+            console.log(`/search/${encodeURI(this.state.keyword)}`)
+            history.push(`/search/${encodeURI(this.state.keyword)}`)
+          }}
         />
         {
           this.state.result.length > 0 || this.state.isLoading
@@ -57,11 +60,11 @@ export default class Search extends Component {
       isLoading: true,
       keyword: nextProps.params.keyword,
     })
-    const searchResponse = await fetch(`api/v1/search/?text=${nextProps.params.keyword}`)
+    const searchResponse = await fetch(`api/v1/search/?text=${decodeURI(nextProps.params.keyword)}`)
     const result = await searchResponse.json().then(camelize)
 
     this.context.updateWeixinConfig({
-      title: `iKnow 华科 | “${nextProps.params.keyword}”相关的问题都在这里啦！`, // 分享标题
+      title: `iKnow 华科 | “${decodeURI(nextProps.params.keyword)}”相关的问题都在这里啦！`, // 分享标题
       // generate 摘要
       desc: result.map(({title}, i) => (i + 1) + '.' + title).join(' \n'), // 分享链接
     })

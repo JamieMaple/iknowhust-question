@@ -18,7 +18,7 @@ export default class Feedback extends Component {
     return (
       <div>
         <FeedbackTop
-          title={`“${this.props.params.type}”的反馈`}
+          title={`“${decodeURI(this.props.params.type)}”的反馈`}
           style={{ backgroundColor: '#fff' }}
           onCloseRequest={() => history.go(-1)}
           onSendRequest={() => this.send()}
@@ -49,7 +49,7 @@ export default class Feedback extends Component {
       },
       body: JSON.stringify({
         content: this.state.content,
-        type: this.props.params.type,
+        type: decodeURI(this.props.params.type),
       }),
     })
       .then((res) => {
@@ -66,7 +66,7 @@ export default class Feedback extends Component {
 
   componentDidMount () {
     this.context.updateWeixinConfig({
-      title: `iKnow 华科 | 向我们反馈“${this.props.params.type}”的建议`, // 分享标题
+      title: `iKnow 华科 | 向我们反馈“${decodeURI(this.props.params.type)}”的建议`, // 分享标题
       // generate 摘要
       desc: '你的反馈对我们帮助非常大哦！', // 分享链接
     })

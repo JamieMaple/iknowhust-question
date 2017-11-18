@@ -35,7 +35,7 @@ export default class Entry extends Component {
         <SearchTopBar
           value={this.state.keyword}
           onInput={(e) => this.setState({ keyword: e.target.value })}
-          onSubmit={() => router.push(`/search/${this.state.keyword}`)}
+          onSubmit={() => router.push(`/search/${encodeURIComponent(this.state.keyword)}`)}
         />
         <TabHeader
           activeIndex={this.state.activeTabIndex}
@@ -52,7 +52,9 @@ export default class Entry extends Component {
         >
           <TextList
             listItems={this.context.top.map((data) => data.title)}
-            onItemClick={(item, i) => router.push(`/question/${this.context.top[i].type}/${this.context.top[i].id}`)}
+            onItemClick={(item, i) =>
+              router.push(`/question/${encodeURIComponent(this.context.top[i].type)}/${this.context.top[i].id}`)
+            }
           />
           {
             Object.keys(this.context.questions).map((key) =>
@@ -60,7 +62,7 @@ export default class Entry extends Component {
                 listItems={Object.keys(this.context.questions[key]) || []}
                 onItemClick={(item) => {
                   router.replace(`/${this.state.activeTabIndex}`)
-                  router.push(`/question/${item}`)
+                  router.push(`/question/${encodeURIComponent(item)}`)
                 }}
               />
             )
