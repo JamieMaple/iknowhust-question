@@ -27,10 +27,10 @@ export default class Search extends Component {
       <div>
         <SearchTopBar
           value={decodeURI(this.state.keyword)}
-          onInput={(e) => this.setState({ keyword: e.target.value })}
+          onInput={(e) => { this.setState({ keyword: encodeURI(e.target.value) }); console.log('aaa') }}
           onSubmit={() => {
-            console.log(`/search/${encodeURI(this.state.keyword)}`)
-            history.push(`/search/${encodeURI(this.state.keyword)}`)
+            // console.log(`/search/${encodeURI(this.state.keyword)}`)
+            history.push(`/search/${this.state.keyword}`)
           }}
         />
         {
@@ -38,7 +38,13 @@ export default class Search extends Component {
             ? (
               <ArticleList
                 listItems={this.state.result}
-                onItemClick={(item) => window.open(item.url)}
+                onItemClick={(item) => {
+                  if (item.id && !item.url) {
+                    history.push(`/question/${encodeURI(item.type)}/${item.id}`)
+                  } else {
+                    window.open(item.url)
+                  }
+                }}
               />
             ) : (
               <div className={styles['i-dont-know']}>
@@ -60,7 +66,7 @@ export default class Search extends Component {
       isLoading: true,
       keyword: nextProps.params.keyword,
     })
-    const searchResponse = await fetch(`api/v1/search/?text=${decodeURI(nextProps.params.keyword)}`)
+    const searchResponse = await fetch(`api/v1/search/?text=${nextProps.params.keyword}`)
     const result = await searchResponse.json().then(camelize)
 
     this.context.updateWeixinConfig({
