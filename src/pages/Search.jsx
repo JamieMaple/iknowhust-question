@@ -7,6 +7,7 @@ import ArticleList from '../components/ArticleList'
 import SearchTopBar from '../components/SearchTopBar'
 
 import styles from '../style/main.sass'
+import articleStyles from '../style/ArticleList.sass'
 
 export default class Search extends Component {
   static contextTypes = {
@@ -23,11 +24,17 @@ export default class Search extends Component {
 
   render () {
     const { history } = this.context
+
+    const questions = this.state.result.filter((item) => !!item.id)
+    const articles = this.state.result.filter((item) => !!item.url)
+
+    const keyword = decodeURI(this.props.params.keyword)
+
     return (
-      <div>
+      <div >
         <SearchTopBar
           value={decodeURI(this.state.keyword)}
-          onInput={(e) => { this.setState({ keyword: encodeURI(e.target.value) }); console.log('aaa') }}
+          onInput={(e) => this.setState({ keyword: encodeURI(e.target.value) })}
           onSubmit={() => {
             // console.log(`/search/${encodeURI(this.state.keyword)}`)
             history.push(`/search/${this.state.keyword}`)
@@ -36,16 +43,32 @@ export default class Search extends Component {
         {
           this.state.result.length > 0 || this.state.isLoading
             ? (
-              <ArticleList
-                listItems={this.state.result}
-                onItemClick={(item) => {
-                  if (item.id && !item.url) {
-                    history.push(`/question/${encodeURI(item.type)}/${item.id}`)
-                  } else {
-                    window.open(item.url)
-                  }
-                }}
-              />
+              this.state.isLoading
+                ? <div style={{ textAlign: 'center', fontSize: '0.85rem' }}>正在加载...</div>
+                : (
+                  <div style={{ flexGrow: 1, overflow: 'scroll' }}>
+                    {
+                      questions.length > 0 &&
+                      [
+                        <h1 className={articleStyles['related-question']}>{keyword}</h1>,
+                        <ArticleList
+                          listItems={questions}
+                          onItemClick={(item) => history.push(`/question/${encodeURI(item.type)}/${item.id}`)}
+                        />,
+                      ]
+                    }
+                    {
+                      articles.length > 0 &&
+                      [
+                        <h1 className={articleStyles['related-article']}>{keyword}</h1>,
+                        <ArticleList
+                          listItems={articles}
+                          onItemClick={(item) => window.open(item.url)}
+                        />,
+                      ]
+                    }
+                  </div>
+                )
             ) : (
               <div className={styles['i-dont-know']}>
                 <div>啊！这个我真不知道！</div>
