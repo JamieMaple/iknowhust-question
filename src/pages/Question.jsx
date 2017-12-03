@@ -24,13 +24,19 @@ export default class Question extends Component {
         <QuestionListTop
           title={decodeURI(this.props.params.type)}
           menuList={matchedQuestions.map((q) => q.summary)}
-          onMenuItemClick={(item, i) => this.setState({ scrollIndex: i })}
+          onMenuItemClick={(item, i) => {
+            window._czc.push(['_trackEvent', '问题页', '菜单点击', item])
+            this.setState({ scrollIndex: i })
+          }}
           onHomeButtonClick={() => history.go(-1)}
         />
         <QuestionList
           questionList={matchedQuestions}
           initScrollToIndex={this.state.scrollIndex}
-          onFeedbackClick={() => router.push(`/feedback/${this.props.params.type}`)}
+          onFeedbackClick={() => {
+            window._czc.push(['_trackEvent', '问题页', '反馈点击', decodeURI(this.props.params.type)])
+            router.push(`/feedback/${this.props.params.type}`)
+          }}
         />
       </div>
     )
@@ -48,6 +54,12 @@ export default class Question extends Component {
       title: `iKnow 华科 | “${decodeURI(nextProps.params.type)}”的问题都在这里啦！`, // 分享标题
       // generate 摘要
       desc: matchedQuestions.map(({title}, i) => (i + 1) + '.' + title).join(' \n'), // 分享链接
+      success: () => {
+        window._czc.push(['_trackEvent', '问题页', '分享', '分享成功'])
+      },
+      cancel: function () {
+        window._czc.push(['_trackEvent', '问题页', '分享', '分享取消'])
+      },
     })
 
     if (nextProps.params.id && nextProps.params.type) {

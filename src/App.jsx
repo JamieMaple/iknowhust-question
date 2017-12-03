@@ -4,6 +4,7 @@ import Component from 'inferno-component'
 import { Route, Router } from 'inferno-router'
 import createHashHistory from 'history/createHashHistory'
 import wx from 'weixin-js-sdk'
+import fep from '../src/frontEndProcessor'
 
 import { camelizeKeys as camelize } from 'humps'
 
@@ -41,7 +42,11 @@ export default class App extends Component {
   top = []
   videotex = []
   config = {}
-  updateWeixinConfig = (wechatShareConfig) => {
+
+  prepareWeixinAuthPromise = null
+
+  updateWeixinConfig = async (wechatShareConfig) => {
+    await this.prepareWeixinAuthPromise
     const jumpBearer = 'https://weixin.bingyan-tech.hustonline.net/iknowhust/question/jump.html'
     const imgUrl = 'https://weixin.bingyan-tech.hustonline.net/iknowhust/question/favicon.png'
     if (!wechatShareConfig.link) {
@@ -80,7 +85,7 @@ export default class App extends Component {
     this.videotex = await (await fetch('api/v1/videotexs/')).json().then(camelize)
     const questionResponse = await fetch('api/v1/questions/')
     const questions = await questionResponse.json().then(camelize)
-    this.allQuestions = questions
+    this.allQuestions = questions.map(fep)
 
     const questionSetByCategory = questions.reduce((set, question) => {
       if (!set[question.category]) set[question.category] = []
@@ -107,7 +112,8 @@ export default class App extends Component {
   }
 
   async prepareWeixinAuth () {
-    return fetch('api/v1/config/', {
+    this.prepareWeixinAuthPromise =
+    fetch('api/v1/config/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -147,6 +153,7 @@ export default class App extends Component {
           })
         })
       })
+    return this.prepareWeixinAuthPromise
   }
 
   componentWillMount () {

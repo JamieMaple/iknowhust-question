@@ -12,7 +12,7 @@ const ArticleList = (props) =>
         >
           {
             item.thumbUrl &&
-            <img src={item.thumbUrl}/>
+            <div className={styles['list-item-img']} style={{ backgroundImage: `url('${item.thumbUrl}')` }}/>
           }
           <div>
             <h2 className={styles['list-item-title']}>{item.title}</h2>

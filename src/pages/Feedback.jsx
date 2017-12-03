@@ -42,6 +42,7 @@ export default class Feedback extends Component {
   }
 
   send () {
+    window._czc.push(['_trackEvent', '反馈', decodeURI(this.props.params.type)])
     fetch('api/v1/feedbacks/', {
       method: 'POST',
       headers: {
@@ -69,6 +70,12 @@ export default class Feedback extends Component {
       title: `iKnow 华科 | 向我们反馈“${decodeURI(this.props.params.type)}”的建议`, // 分享标题
       // generate 摘要
       desc: '你的反馈对我们帮助非常大哦！', // 分享链接
+      success: () => {
+        window._czc.push(['_trackEvent', '反馈页', '分享', '分享成功'])
+      },
+      cancel: function () {
+        window._czc.push(['_trackEvent', '反馈页', '分享', '分享取消'])
+      },
     })
   }
 }

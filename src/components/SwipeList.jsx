@@ -59,7 +59,7 @@ export default class SwipeList extends Component {
         startSlide: this.props.activeIndex,
         speed: 400,
         auto: 0,
-        continuous: true,
+        continuous: false,
         disableScroll: false,
         stopPropagation: false,
         callback: () => {

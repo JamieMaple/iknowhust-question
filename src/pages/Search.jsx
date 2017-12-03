@@ -37,6 +37,7 @@ export default class Search extends Component {
           onInput={(e) => this.setState({ keyword: encodeURI(e.target.value) })}
           onSubmit={() => {
             // console.log(`/search/${encodeURI(this.state.keyword)}`)
+            window._czc.push(['_trackEvent', '搜索页', '再次搜索', this.state.keyword])
             history.push(`/search/${this.state.keyword}`)
           }}
         />
@@ -46,7 +47,7 @@ export default class Search extends Component {
               this.state.isLoading
                 ? <div style={{ textAlign: 'center', fontSize: '0.85rem' }}>正在加载...</div>
                 : (
-                  <div style={{ flexGrow: 1, overflow: 'scroll' }}>
+                  <div style={{ flexGrow: 1, overflow: 'scroll' }} data-scroll>
                     {
                       questions.length > 0 &&
                       [
@@ -96,6 +97,12 @@ export default class Search extends Component {
       title: `iKnow 华科 | “${decodeURI(nextProps.params.keyword)}”相关的问题都在这里啦！`, // 分享标题
       // generate 摘要
       desc: result.map(({title}, i) => (i + 1) + '.' + title).join(' \n'), // 分享链接
+      success: () => {
+        window._czc.push(['_trackEvent', '搜索页', '分享', '分享成功'])
+      },
+      cancel: function () {
+        window._czc.push(['_trackEvent', '搜索页', '分享', '分享取消'])
+      },
     })
 
     this.setState({

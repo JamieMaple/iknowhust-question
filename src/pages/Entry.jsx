@@ -35,7 +35,10 @@ export default class Entry extends Component {
         <SearchTopBar
           value={this.state.keyword}
           onInput={(e) => this.setState({ keyword: e.target.value })}
-          onSubmit={() => router.push(`/search/${encodeURIComponent(this.state.keyword)}`)}
+          onSubmit={() => {
+            window._czc.push(['_trackEvent', '主页', '搜索', this.state.keyword])
+            router.push(`/search/${encodeURIComponent(this.state.keyword)}`)
+          }}
         />
         <TabHeader
           activeIndex={this.state.activeTabIndex}
@@ -81,9 +84,15 @@ export default class Entry extends Component {
 
   componentDidMount () {
     this.context.updateWeixinConfig({
-      title: 'iKnow 华科 | 你不是知道的我们都知道！', // 分享标题
+      title: 'iKnow 华科 | 你不知道的我们都知道！', // 分享标题
       // generate 摘要
       desc: this.context.top.map(({title}, i) => (i + 1) + '.' + title).join(' \n'), // 分享链接
+      success: () => {
+        window._czc.push(['_trackEvent', '主页', '分享', '分享成功'])
+      },
+      cancel: function () {
+        window._czc.push(['_trackEvent', '主页', '分享', '分享取消'])
+      },
     })
   }
 }
