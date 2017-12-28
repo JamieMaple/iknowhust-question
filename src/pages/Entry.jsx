@@ -7,6 +7,7 @@ import TextList from '../components/TextList'
 import ArticleList from '../components/ArticleList'
 import SearchTopBar from '../components/SearchTopBar'
 import SwipeList from '../components/SwipeList'
+import TeacherBanner from '../components/TeacherBanner'
 
 export default class Entry extends Component {
   static contextTypes = {
@@ -40,6 +41,7 @@ export default class Entry extends Component {
             router.push(`/search/${encodeURIComponent(this.state.keyword)}`)
           }}
         />
+        <TeacherBanner onClick={() => router.push('/teachers')}/>
         <TabHeader
           activeIndex={this.state.activeTabIndex}
           tabs={[

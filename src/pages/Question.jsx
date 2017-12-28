@@ -2,8 +2,11 @@ import PropTypes from 'prop-types'
 
 import Component from 'inferno-component'
 
-import QuestionListTop from '../components/QuestionListTop'
+// import QuestionListTop from '../components/QuestionListTop'
+import ListTopWithTwoIcon from '../components/TopBarWithTwoIcon'
 import QuestionList from '../components/QuestionList'
+
+import styles from '../style/QuestionListTop.sass'
 
 export default class Question extends Component {
   static contextTypes = {
@@ -13,6 +16,7 @@ export default class Question extends Component {
 
   state = {
     scrollIndex: 0,
+    menuHidden: true,
   }
 
   render () {
@@ -21,15 +25,7 @@ export default class Question extends Component {
       .filter((question) => question.type === decodeURI(this.props.params.type))
     return (
       <div>
-        <QuestionListTop
-          title={decodeURI(this.props.params.type)}
-          menuList={matchedQuestions.map((q) => q.summary)}
-          onMenuItemClick={(item, i) => {
-            window._czc.push(['_trackEvent', '问题页', '菜单点击', item])
-            this.setState({ scrollIndex: i })
-          }}
-          onHomeButtonClick={() => history.go(-1)}
-        />
+        {this.renderListTop(matchedQuestions)}
         <QuestionList
           questionList={matchedQuestions}
           initScrollToIndex={this.state.scrollIndex}
@@ -68,5 +64,38 @@ export default class Question extends Component {
 
       this.setState({ scrollIndex })
     }
+  }
+
+  renderListTop (matchedQuestions) {
+    const menuList = matchedQuestions.map((q) => q.summary)
+    return (
+      <ListTopWithTwoIcon
+        title={decodeURI(this.props.params.type)}
+        leftIconClass={'home'}
+        onLeftIconClick={() => history.go(-1)}
+
+        rightIconClass={'menu'}
+        onRightIconClick={() => this.setState((preState) => ({ menuHidden: !preState.menuHidden }))}
+        rightIconContent={
+          menuList.length > 0 &&
+          <ul className={styles['menu-ul'] + ' ' + (!this.state.menuHidden ? styles['show'] : '')}>
+            {
+              menuList.map((item, i) =>
+                <li
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    window._czc.push(['_trackEvent', '问题页', '菜单点击', item])
+                    // this.setState({  })
+                    this.setState((preState) => ({ menuHidden: true, scrollIndex: i }))
+                  }}
+                >
+                  {item}
+                </li>
+              )
+            }
+          </ul>
+        }
+      />
+    )
   }
 }

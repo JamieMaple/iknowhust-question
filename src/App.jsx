@@ -12,6 +12,8 @@ import Entry from './pages/Entry'
 import Question from './pages/Question'
 import Search from './pages/Search'
 import Feedback from './pages/Feedback'
+import SearchTeacher from './pages/SearchTeacher'
+import TeachersInFaculty from './pages/TeachersInFaculty'
 
 const history = createHashHistory()
 
@@ -26,6 +28,9 @@ export default class App extends Component {
             <Route path={'/search/:keyword'} component={Search}/>
             <Route path={'/question/:type/:id'} component={Question}/>
             <Route path={'/question/:type'} component={Question}/>
+            <Route path={'/teachers/search/:keyword'} component={SearchTeacher}/>
+            <Route path={'/teachers/:faculty'} component={TeachersInFaculty}/>
+            <Route path={'/teachers'} component={SearchTeacher}/>
             <Route path={'/:index'} component={Entry}/>
           </Router>
         )

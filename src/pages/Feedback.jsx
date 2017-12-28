@@ -3,7 +3,8 @@ import Component from 'inferno-component'
 
 // import { camelizeKeys as camelize } from 'humps'
 
-import FeedbackTop from '../components/FeedbackTop'
+// import FeedbackTop from '../components/FeedbackTop'
+import TopBarWithTwoIcon from '../components/TopBarWithTwoIcon'
 import FeedbackEditor from '../components/FeedbackEditor'
 import FeedbackResult from '../components/FeedbackResult'
 
@@ -17,11 +18,13 @@ export default class Feedback extends Component {
     const { history } = this.context
     return (
       <div>
-        <FeedbackTop
+        <TopBarWithTwoIcon
           title={`“${decodeURI(this.props.params.type)}”的反馈`}
           style={{ backgroundColor: '#fff' }}
-          onCloseRequest={() => history.go(-1)}
-          onSendRequest={() => this.send()}
+          onLeftIconClick={() => history.go(-1)}
+
+          onRightIconClick={() => this.send()}
+          rightIconClass={'send'}
         />
         {
           !this.state.success

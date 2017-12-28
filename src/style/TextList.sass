@@ -12,10 +12,11 @@
   position: relative
   background-color: #f3f5f8
   -webkit-overflow-scrolling: touch
-  .list-item
+  .list-item, .list-item-header
+    $height: 3.2rem
     margin-top: .15rem
-    height: 3.2rem
-    line-height: 3.2rem
+    height: $height
+    line-height: $height
     background-color: #fff
     color: #4e5053
     font-size: .8rem
@@ -23,3 +24,11 @@
     transition: background-color .1s
     &:last-child
       margin-bottom: 3rem
+  .list-item-header
+    $height: 2.8rem
+    height: $height
+    line-height: $height     
+    font-size: .9rem
+    font-weight: 600
+    margin-top: 1rem
+    
