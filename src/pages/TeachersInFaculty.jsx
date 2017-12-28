@@ -10,12 +10,15 @@ export default class TeachersInFaculty extends Component {
     return (
       <div>
         <TopBarWithTwoIcon
-          style={{ backgroundColor: '#fff' }}
+          style={{
+            backgroundColor: '#fff',
+            borderBottomColor: '#f1f1f1',
+          }}
           title={this.props.params.faculty}
 
           onLeftIconClick={() => history.go(-1)}
         />
-        <div style={{ position: 'relative' }}>
+        <div style={{ position: 'relative', height: '100%' }}>
           <LettersSideBar />
         </div>
       </div>

@@ -3,7 +3,7 @@
 import styles from '../style/TextList.sass'
 
 const MixedTeachersList = ({ relatedTeachers = [], relatedFaculties = [] }) => (
-  <ul className={styles['text-list']}>
+  <ul className={styles['text-list']} data-scroll>
     {relatedFaculties.length > 0 && renderFacultiesList(relatedFaculties)}
     {relatedTeachers.length > 0 && renderTeachersList(relatedTeachers)}
   </ul>
