@@ -11,7 +11,7 @@ const TextList = (props) =>
           className={styles['list-item']}
           onClick={() => props.onItemClick(item, i)}
         >
-          {i + 1}. {item}
+          {props.withOrder ? i + 1 + '. ' : ''}{item}
         </li>
       )
     }
