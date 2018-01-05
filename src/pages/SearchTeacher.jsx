@@ -2,6 +2,7 @@ import Component from 'inferno-component'
 
 import SearchTopBar from '../components/SearchTopBar'
 import MixedTeachersList from '../components/MixedTeachersList'
+import TeacherSearchResult from '../components/TeacherSearchResult'
 
 export default class SearchTeacher extends Component {
   state = {
@@ -29,20 +30,22 @@ export default class SearchTeacher extends Component {
         {
           this.state.isLoading
             ? (
-              <div style={{ textAlign: 'center', fontSize: '0.85rem' }}>正在加载...</div>
+              <div style={{ textAlign: 'center', fontSize: '0.85rem', color: '#e5e5e5' }}>正在加载...</div>
             )
-            : (
-              <MixedTeachersList
-                relatedTeachers={this.state.teachers}
-                relatedFaculties={this.state.faculties}
-                onFacultiesClick={(e) => {
-                  router.push(`/teachers/${e.name}`)
-                }}
-                onTeachersClick={(e) => {
-                  router.push(`/teachers/detail/${e.id}`)
-                }}
-              />
-            )
+            : this.state.faculties.length > 0 || this.state.teachers.length > 0
+              ? (
+                <MixedTeachersList
+                  relatedTeachers={this.state.teachers}
+                  relatedFaculties={this.state.faculties}
+                  onFacultiesClick={(e) => {
+                    router.push(`/teachers/${e.name}`)
+                  }}
+                  onTeachersClick={(e) => {
+                    router.push(`/teachers/detail/${e.id}`)
+                  }}
+                />
+              )
+              : <TeacherSearchResult />
         }
       </div>
     )
