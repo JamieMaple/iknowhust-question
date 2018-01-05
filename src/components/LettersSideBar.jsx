@@ -58,7 +58,7 @@ export default class LettersSideBar extends Component {
     this.rootElementHeight = rect.height
     this.setState({
       inTouch: true,
-    })
+    }, () => this.onTouchMove(e))
   }
 
   onTouchMove = (e) => {
@@ -80,6 +80,11 @@ export default class LettersSideBar extends Component {
       this.setState({
         translate,
         currentLetter: currentLetterElement.innerHTML[0],
+      }, () => {
+        const letter = this.state.currentLetter
+        if ((letter || '').match(/[A-Z]/)) {
+          this.props.onRequestToJump(letter)
+        }
       })
     }
   }

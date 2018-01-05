@@ -35,6 +35,12 @@ export default class SearchTeacher extends Component {
               <MixedTeachersList
                 relatedTeachers={this.state.teachers}
                 relatedFaculties={this.state.faculties}
+                onFacultiesClick={(e) => {
+                  router.push(`/teachers/${e.name}`)
+                }}
+                onTeachersClick={(e) => {
+                  router.push(`/teachers/detail/${e.id}`)
+                }}
               />
             )
         }
@@ -66,26 +72,20 @@ export default class SearchTeacher extends Component {
       keyword,
     })
 
-    const nameResponse = await fetch(`api/v1/teachers/search/?name=${keyword}`)
-    const facultyResponse = await fetch(`api/v1/teachers/search/?school=${keyword}`)
+    const response = await fetch(`api/v1/teachers/search/?text=${keyword}`)
 
     const teachersMapByName = {}
     const faculties = {}
 
-    ;(await nameResponse.json()).forEach((teacher) => {
-      teachersMapByName[teacher.name] = teacher
-      faculties[teacher.school] += ' '
-    })
-
-    ;(await facultyResponse.json()).forEach((teacher) => {
+    ;(await response.json()).forEach((teacher) => {
       teachersMapByName[teacher.name] = teacher
       faculties[teacher.school] += ' '
     })
 
     this.setState({
       isLoading: false,
-      teachers: Object.values(teachersMapByName).map(({name}) => name),
-      faculties: Object.keys(faculties).sort((a, b) => a.length - b.length),
+      teachers: Object.values(teachersMapByName).map(({name, id}) => ({name, id})),
+      faculties: Object.keys(faculties).sort((a, b) => a.length - b.length).map((name) => ({ name })),
     })
   }
 }
