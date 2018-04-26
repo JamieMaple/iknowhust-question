@@ -1,50 +1,50 @@
-'use strict';
+'use strict'
 
-const autoprefixer = require('autoprefixer');
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
-const InterpolateHtmlPlugin = require('inferno-dev-utils/InterpolateHtmlPlugin');
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
-const eslintFormatter = require('inferno-dev-utils/eslintFormatter');
-const ModuleScopePlugin = require('inferno-dev-utils/ModuleScopePlugin');
-const paths = require('./paths');
-const getClientEnvironment = require('./env');
+const autoprefixer = require('autoprefixer')
+const path = require('path')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const ManifestPlugin = require('webpack-manifest-plugin')
+const InterpolateHtmlPlugin = require('inferno-dev-utils/InterpolateHtmlPlugin')
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
+const eslintFormatter = require('inferno-dev-utils/eslintFormatter')
+const ModuleScopePlugin = require('inferno-dev-utils/ModuleScopePlugin')
+const paths = require('./paths')
+const getClientEnvironment = require('./env')
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
-const publicPath = paths.servedPath;
+const publicPath = paths.servedPath
 // Some apps do not use client-side routing with pushState.
 // For these, "homepage" can be set to "." to enable relative asset paths.
-const shouldUseRelativeAssetPaths = publicPath === './';
+const shouldUseRelativeAssetPaths = publicPath === './'
 // Source maps are resource heavy and can cause out of memory issue for large source files.
-const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
+const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false'
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
-const publicUrl = publicPath.slice(0, -1);
+const publicUrl = publicPath.slice(0, -1)
 // Get environment variables to inject into our app.
-const env = getClientEnvironment(publicUrl);
+const env = getClientEnvironment(publicUrl)
 
 // Assert this just to be safe.
 // Development builds of Inferno are slow and not intended for production.
 if (env.stringified['process.env'].NODE_ENV !== '"production"') {
-  throw new Error('Production builds must have NODE_ENV=production.');
+  throw new Error('Production builds must have NODE_ENV=production.')
 }
 
 // Note: defined here because it will be used more than once.
-const cssFilename = 'static/css/[name].[contenthash:8].css';
+const cssFilename = 'static/v1/css/[name].[contenthash:8].css'
 
 // ExtractTextPlugin expects the build output to be flat.
 // (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
 // However, our output is structured with css, js and media folders.
 // To have this structure working with relative paths, we have to use custom options.
 const extractTextPluginOptions = shouldUseRelativeAssetPaths
-  ? // Making sure that the publicPath goes back to to build folder.
-    { publicPath: Array(cssFilename.split('/').length).join('../') }
-  : {};
+  // Making sure that the publicPath goes back to to build folder.
+  ? { publicPath: Array(cssFilename.split('/').length).join('../') }
+  : {}
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -63,12 +63,12 @@ module.exports = {
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    filename: 'static/js/[name].[chunkhash:8].js',
-    chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
+    filename: 'static/v1/js/[name].[chunkhash:8].js',
+    chunkFilename: 'static/v1/js/[name].[chunkhash:8].chunk.js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
-    devtoolModuleFilenameTemplate: info =>
+    devtoolModuleFilenameTemplate: (info) =>
       path
         .relative(paths.appSrc, info.absoluteResourcePath)
         .replace(/\\/g, '/'),
@@ -90,9 +90,9 @@ module.exports = {
     // for React Native Web.
     extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
-      react: 'inferno-compat',
+      'react': 'inferno-compat',
       'react-dom': 'inferno-compat',
-      
+
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
@@ -120,7 +120,6 @@ module.exports = {
             options: {
               formatter: eslintFormatter,
               eslintPath: require.resolve('eslint'),
-              
             },
             loader: require.resolve('eslint-loader'),
           },
@@ -139,7 +138,7 @@ module.exports = {
             loader: require.resolve('url-loader'),
             options: {
               limit: 10000,
-              name: 'static/media/[name].[hash:8].[ext]',
+              name: 'static/v1/img/[name].[hash:8].[ext]',
             },
           },
           // Process JS with Babel.
@@ -148,7 +147,7 @@ module.exports = {
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-              
+
               compact: true,
             },
           },
@@ -165,7 +164,7 @@ module.exports = {
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
           {
-            test: /\.css$/,
+            test: /\.sass$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
@@ -179,6 +178,7 @@ module.exports = {
                     {
                       loader: require.resolve('css-loader'),
                       options: {
+                        module: 1,
                         importLoaders: 1,
                         minimize: true,
                         sourceMap: shouldUseSourceMap,
@@ -204,6 +204,7 @@ module.exports = {
                         ],
                       },
                     },
+                    require.resolve('sass-loader'),
                   ],
                 },
                 extractTextPluginOptions
@@ -223,7 +224,7 @@ module.exports = {
             // by webpacks internal loaders.
             exclude: [/\.js$/, /\.html$/, /\.json$/],
             options: {
-              name: 'static/media/[name].[hash:8].[ext]',
+              name: 'static/v1/media/[name].[hash:8].[ext]',
             },
           },
           // ** STOP ** Are you adding a new loader?
@@ -299,17 +300,17 @@ module.exports = {
       // about it being stale, and the cache-busting can be skipped.
       dontCacheBustUrlsMatching: /\.\w{8}\./,
       filename: 'service-worker.js',
-      logger(message) {
+      logger (message) {
         if (message.indexOf('Total precache size is') === 0) {
           // This message occurs for every build and is a bit too noisy.
-          return;
+          return
         }
         if (message.indexOf('Skipping static resource') === 0) {
           // This message obscures real errors so we ignore it.
           // https://github.com/facebookincubator/create-react-app/issues/2612
-          return;
+          return
         }
-        console.log(message);
+        console.log(message)
       },
       minify: true,
       // For unknown URLs, fallback to the index page
@@ -336,4 +337,4 @@ module.exports = {
     tls: 'empty',
     child_process: 'empty',
   },
-};
+}

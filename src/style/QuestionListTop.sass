@@ -1,0 +1,107 @@
+.questions-list-header
+  display: flex
+  position: relative
+  flex-direction: row
+  height: 2.4rem
+  background-color: #f2f2f2
+  border-bottom: #e3e7e8 .6rem solid
+  flex-shrink: 0
+  
+
+.questions-list-button
+  flex-grow: 1
+  position: relative
+  background-size: 50% auto
+  background-repeat: no-repeat
+  background-position: 50%
+  // background-color: #f2f2f2
+  &.home
+    background-image: url('../assets/home-icon.png')
+  &.menu
+    background-image: url('../assets/menu-icon.png')
+  &.close
+    &::before
+      content: '+'
+      position: absolute
+      display: block
+      width: 2.4rem;
+      line-height: 2.4rem;
+      height: 2.4rem;
+      text-align: center;
+      display: inline-block;
+      transform: rotate(45deg)scale(1.2);
+      font-size: 1.5rem;
+      color: #5192fc;
+      font-weight: 300;
+  &.send
+    background-image: url('../assets/send-icon.png')
+
+.questions-list-title
+  width: 76%
+  height: 2.4rem
+  line-height: 2.4rem
+  margin: auto
+  text-align: center
+  font-size: .9rem
+  font-weight: 600
+  color: #5192fc
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+
+.menu-ul
+  list-style: none
+  margin: 0
+  padding: 0
+  position: absolute
+  right: .3rem
+  top: 2.4rem
+  height: 0
+  max-height: 20rem
+  width: 6.8rem
+  transform: translateY(-1rem)
+  opacity: 0
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .15)
+  border-radius: .6rem
+  overflow: hidden
+  background-color: #fff
+  transition: transform .2s, opacity .3s
+  -webkit-overflow-scrolling: touch
+  &.show
+    height: auto
+    background-color: #fff
+    transform: translateY(0)
+    opacity: 1
+    overflow: auto
+    // overflow: visible
+    z-index: 999999999
+    &::after
+      display: inline-block
+      position: absolute
+      content: ""
+      width: 1rem
+      height: 1rem
+      right: .6rem
+      top: -.2rem
+      background-color: #fff
+      transform: rotate(45deg)
+      z-index: -1
+
+  > li
+    &:first-child
+      border-top-left-radius: .6rem
+      border-top-right-radius: .6rem
+    &:last-child
+      border-bottom-left-radius: .6rem
+      border-bottom-right-radius: .6rem
+
+    width: 100%
+    text-align: center
+    height: 2rem
+    line-height: 2rem
+    font-size: .72rem
+    font-weight: 600
+    color: #4e5053
+    border-bottom: 1px solid #f6f6f9
+    box-sizing: border-box
+    transition: background-color .2s

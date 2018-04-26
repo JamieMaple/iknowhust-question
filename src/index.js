@@ -1,5 +1,20 @@
-import { render } from 'inferno';
-import App from './App';
-import './index.css';
+import { render } from 'inferno'
+import App from './App.jsx'
+import './style/main.sass'
 
-render(<App />, document.getElementById('app'));
+import register from './registerServiceWorker'
+
+(function () {
+  // use this script to replace @media
+  let timeoutHandler = 0
+  const rem = () => {
+    clearTimeout(timeoutHandler)
+    document.documentElement.style.fontSize = window.innerWidth / 20 + 'px'
+  }
+  window.addEventListener('resize', () => { timeoutHandler = setTimeout(rem, 200) })
+  rem()
+})()
+
+render(<App />, document.getElementById('app'))
+
+register()

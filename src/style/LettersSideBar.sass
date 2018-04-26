@@ -1,0 +1,49 @@
+.sidebar
+  position: absolute
+
+  box-sizing: border-box
+
+  width: 2rem
+  display: flex
+  flex-direction: column
+
+  // justify-content: space-around
+
+  right: 0
+  top: 1rem
+
+  // padding: 1rem 0
+
+  $blue-color: #5FABF9
+  &-letter
+    text-align: center
+    color: $blue-color
+    font-size: 0.6rem
+    position: relative
+    &.active
+      background-image: linear-gradient(90deg, transparent 0,transparent 25%, $blue-color 25%, $blue-color 75%,transparent 75%, transparent 100%)
+      // background-size: 100% 100%
+      background-repeat: no-repeat
+      background-position: center
+      color: #fff
+
+  &-tip-wrapper
+    position: absolute
+    // top: 1rem
+    // transform: translate3d(0,1rem,0)
+    font-size: 0.6rem
+    color: transparent
+
+  &-tip
+    text-align: center
+    line-height: 2rem
+    color: #fff
+    font-size: 0.8rem
+    bottom: 30%
+    right: 100%   
+    position: absolute
+    width: 2rem
+    height: 2rem
+    border-radius: 1rem
+    border-bottom-right-radius: 0
+    background-color: $blue-color
