@@ -65,9 +65,7 @@
     "build": "node scripts/build.js",
     "test": "echo \"This Web App has no test scripts!\" && exit 0",
     "lint": "eslint ./src",
-    "deploy:remove": "rm -rf .build",
-    "deploy:init": "git clone -b release ssh://git@git.bingyan.net:88/Faraway/iknow-answers.git .build",
-    "deploy": "rm -rf .build/dist/* && npm run build && cp -rf build/* .build/dist && cd .build && git add . && git commit -m 'auto deploy commit' && git push origin release"
+    "deploy": "chmod +x deploy.sh && ./deploy.sh"
   },
   "babel": {
     "presets": [
