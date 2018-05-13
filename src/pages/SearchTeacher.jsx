@@ -7,6 +7,7 @@ import TeacherSearchResult from '../components/TeacherSearchResult'
 export default class SearchTeacher extends Component {
   state = {
     isLoading: false,
+    hasSearchedOnce: false,
     keyword: '',
     teachers: [],
     faculties: [],
@@ -22,7 +23,11 @@ export default class SearchTeacher extends Component {
           value={decodeURI(this.state.keyword)}
           onInput={(e) => this.setState({ keyword: encodeURI(e.target.value) })}
           onSubmit={() => {
-          // console.log(`/search/${encodeURI(this.state.keyword)}`)
+            if (!this.state.keyword) {
+              router.push('/')
+              return
+            }
+            // console.log(`/search/${encodeURI(this.state.keyword)}`)
             window._czc.push(['_trackEvent', '搜索教师页', '搜索', decodeURI(this.state.keyword)])
             router.push(`/teachers/search/${this.state.keyword}`)
           }}
@@ -45,7 +50,8 @@ export default class SearchTeacher extends Component {
                   }}
                 />
               )
-              : <TeacherSearchResult />
+              : this.state.hasSearchedOnce ? <TeacherSearchResult /> : null
+
         }
       </div>
     )
@@ -69,6 +75,12 @@ export default class SearchTeacher extends Component {
   async fetchSearchResult (keyword) {
     if (!keyword) {
       return
+    }
+    if (!this.state.hasSearchedOnce) {
+      this.setState((prev) => ({
+        ...prev,
+        hasSearchedOnce: true,
+      }))
     }
     this.setState({
       isLoading: true,

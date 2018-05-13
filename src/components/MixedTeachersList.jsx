@@ -7,8 +7,8 @@ const MixedTeachersList = ({ relatedTeachers = [], relatedFaculties = [], onFacu
     className={styles['text-list']}
     data-scroll
   >
-    {relatedFaculties.length > 0 && renderFacultiesList(relatedFaculties, onFacultiesClick)}
     {relatedTeachers.length > 0 && renderTeachersList(relatedTeachers, onTeachersClick)}
+    {relatedFaculties.length > 0 && renderFacultiesList(relatedFaculties, onFacultiesClick)}
   </ul>
 )
 

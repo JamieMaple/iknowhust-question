@@ -22,7 +22,6 @@ export default class Feedback extends Component {
           title={`“${decodeURI(this.props.params.type)}”的反馈`}
           style={{ backgroundColor: '#fff' }}
           onLeftIconClick={() => history.go(-1)}
-
           onRightIconClick={() => this.send()}
           rightIconClass={'send'}
         />

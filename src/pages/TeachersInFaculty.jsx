@@ -18,6 +18,10 @@ export default class TeachersInFaculty extends Component {
   scrollWrapper = null
   scrollSubWrapper = null
 
+  handleClick = (data) => (item, index) => {
+    this.context.router.push(`/teachers/detail/${data[index].id}`)
+  }
+
   render () {
     const data = this.state.teachersByLetters
     const title = decodeURI(this.props.params.faculty)
@@ -47,6 +51,7 @@ export default class TeachersInFaculty extends Component {
                     <LetterGroup
                       letter={data[0].initial}
                       textList={data.map(({ name }) => `${name} - ${title}`)}
+                      onItemClick={this.handleClick(data)}
                     />
                   ))
               }

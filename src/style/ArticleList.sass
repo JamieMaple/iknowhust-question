@@ -1,4 +1,6 @@
 .article-list
+  // display: flex
+  // flex-direction: column
   margin: 0
   list-style: none
   padding-left: 0
@@ -7,17 +9,17 @@
   position: relative
   background-color: #f3f5f8
   -webkit-overflow-scrolling: touch
+  & > li:last-of-type
+    margin-bottom: 8rem
   .list-item
     display: flex
     flex-direction: row
     padding: .5rem .8rem
-    width: 100%
+    width: 100
     margin: 2px 0
     background-color: #fff
     box-sizing: border-box
     text-decoration: none
-    &:last-child
-      margin-bottom: 2rem
     > div
       flex-grow: 1
       overflow: hidden

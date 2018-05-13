@@ -4,14 +4,17 @@
   overflow: hidden
 
 .text-list
+  display: flex
+  flex-direction: column
   margin: 0
   list-style: none
   padding-left: 0
   height: 100%
   overflow: scroll
   position: relative
-  background-color: #f3f5f8
-  -webkit-overflow-scrolling: touch
+  -webkit-overflow-scrlling: touch
+  .last-list-item
+    margin-bottom: 1.5rem
   .list-item, .list-item-header
     $height: 3.2rem
     margin-top: .15rem
@@ -32,4 +35,17 @@
     font-size: .9rem
     font-weight: 600
     margin-top: 1rem
-    
+  
+  .power
+    margin-top: 5.5rem
+    position: relative
+    flex: 1
+    .wrapper
+      position: absolute
+      bottom: 6rem
+      height: 0.8rem
+      width: 100%
+      text-align: center
+      img
+        height: 100%
+        width: auto

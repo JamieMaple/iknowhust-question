@@ -30,7 +30,7 @@ TopBarWithTwoIcon.propTypes = {
 }
 
 TopBarWithTwoIcon.defaultProps = {
-  onLeftIconClick: () => {},
+  onLeftIconClick: () => history.go(-1),
   onRightIconClick: () => {},
 
   leftIconClass: 'home',

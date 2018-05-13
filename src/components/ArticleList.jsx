@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 
 import styles from '../style/ArticleList.sass'
+import Power from './Power'
 
 const ArticleList = (props) =>
-  <ul className={styles['article-list']}>
+  <ul className={styles['article-list']} style={props.style}>
     {
       props.listItems.map((item, i) =>
         <li
@@ -20,6 +21,11 @@ const ArticleList = (props) =>
           </div>
         </li>
       )
+    }
+    {
+      props.hasPower
+        ? <Power />
+        : null
     }
   </ul>
 

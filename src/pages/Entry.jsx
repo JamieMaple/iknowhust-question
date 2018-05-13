@@ -31,6 +31,9 @@ export default class Entry extends Component {
 
   render () {
     const { router } = this.context
+
+    const commonListStyle = {}
+
     return (
       <div>
         <SearchTopBar
@@ -56,6 +59,8 @@ export default class Entry extends Component {
           onSlideChange={this.handleIndexChange}
         >
           <TextList
+            hasPower
+            style={commonListStyle}
             listItems={this.context.top.map((data) => data.title)}
             onItemClick={(item, i) =>
               router.push(`/question/${encodeURIComponent(this.context.top[i].type)}/${this.context.top[i].id}`)
@@ -64,6 +69,8 @@ export default class Entry extends Component {
           {
             Object.keys(this.context.questions).map((key) =>
               <TextList
+                hasPower
+                style={commonListStyle}
                 listItems={Object.keys(this.context.questions[key]) || []}
                 onItemClick={(item) => {
                   router.replace(`/${this.state.activeTabIndex}`)
@@ -73,6 +80,8 @@ export default class Entry extends Component {
             )
           }
           <ArticleList
+            hasPower
+            style={commonListStyle}
             listItems={this.context.videotex}
             onItemClick={(item) => {
               router.replace(`/${this.state.activeTabIndex}`)
