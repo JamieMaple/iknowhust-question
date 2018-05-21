@@ -26,7 +26,7 @@ export default class Search extends Component {
     const { history } = this.context
 
     const questions = this.state.result.filter((item) => !!item.id)
-    const articles = this.state.result.filter((item) => !!item.url)
+    // const articles = this.state.result.filter((item) => !!item.url)
 
     const keyword = decodeURI(this.props.params.keyword)
 
@@ -58,7 +58,7 @@ export default class Search extends Component {
                         />,
                       ]
                     }
-                    {
+                    {/* {
                       articles.length > 0 &&
                       [
                         <h1 className={articleStyles['related-article']}>{keyword}</h1>,
@@ -67,7 +67,7 @@ export default class Search extends Component {
                           onItemClick={(item) => window.open(item.url)}
                         />,
                       ]
-                    }
+                    } */}
                   </div>
                 )
             ) : (
